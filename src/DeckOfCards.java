@@ -51,10 +51,10 @@ public class DeckOfCards {
 		String[] suits = {"Hearts","Diamonds","Clubs","Spades"};
 	
 	
-		for( int count =0; count < NO_OF_CARDS; count++) {
-			
+		for( int count =0; count < NO_OF_CARDS; count++) 
 			insertNewCardToDeck(new Card(faces[count % NO_OF_FACES],suits[count / NO_OF_FACES]));
-		}
+		
+		shuffleDeck();
 	
 	}
 	
@@ -64,6 +64,41 @@ public class DeckOfCards {
 		return this.deckOfCards.toString();
 	}
 	
+	// Private method to shuffle the deck
+	private void shuffleDeck() {
+		
+		int second;
+		
+		for( int first = 0; first < NO_OF_CARDS; first++)	{
+			
+			second = randomNumber.nextInt(NO_OF_CARDS);
+			
+			Card temp  = this.deckOfCards.get(first);
+			this.deckOfCards.set(first, this.deckOfCards.get(second));
+			this.deckOfCards.set(second, temp);
+		}
+		
+	}
+	
+	// Method to empty the dealers deck and move all cards to the winner's deck
+	public void emptyDeckToWinnerDeck(DeckOfCards winnerDeck){
+		
+		Card removedCard = this.dealNextCard();
+		
+		while(removedCard != null)	{
+			
+			winnerDeck.insertNewCardToDeck(removedCard);
+			removedCard = this.dealNextCard();
+		}
+	}
+	
+	
+	// Check if the current player lost in the war?
+	public boolean lostInWar() {
+		
+		return this.deckOfCards.size() == 0;
+	}
+	
 	
 	public static void main(String[] args ) {
 		
@@ -71,7 +106,5 @@ public class DeckOfCards {
 		d1.loadAndShuffle();
 		System.out.println(d1);
 		
-	
 	}
-	
 }
