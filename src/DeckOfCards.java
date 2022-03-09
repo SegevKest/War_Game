@@ -94,7 +94,7 @@ public class DeckOfCards {
 	
 	
 	// Check if the current player lost in the war?
-	public boolean lostInWar() {
+	public boolean lostInGame() {
 		
 		return this.deckOfCards.size() == 0;
 	}

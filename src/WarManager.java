@@ -22,8 +22,9 @@ public class WarManager {
 		
 		this.playersTurn = true;
 		this.atWar = false;
-		this.currentWarStrike = 1;
+		this.currentWarStrike = 0;
 	}
+	
 	
 	public void dealerSplitsToPlayers() {
 		
@@ -41,54 +42,105 @@ public class WarManager {
 		}	
 	}
 	
-	private boolean someOneLost() {
 	
-		return	(! this.playerOneDeck.lostInWar() && this.playerTwoDeck.lostInWar()) ||
-				(this.playerOneDeck.lostInWar() && ! this.playerTwoDeck.lostInWar());
+	private boolean someOneLostTheGame() {
+	
+		return	(! this.playerOneDeck.lostInGame() && this.playerTwoDeck.lostInGame()) ||
+				(this.playerOneDeck.lostInGame() && ! this.playerTwoDeck.lostInGame());
 				
 	}
 	
-	private String whoLost() {
+	
+	private String whoLostTheGame() {
 		
-		if ((! this.playerOneDeck.lostInWar() && this.playerTwoDeck.lostInWar()))
-			return "Player 1 Won the WAR";
+		if ((! this.playerOneDeck.lostInGame() && this.playerTwoDeck.lostInGame()))
+			return "Player 1 Won the GAME";
 		else
-			return "Player 2 Won the WAR";
+			return "Player 2 Won the GAME";
 	}
 	
+	
+	
+	// All the war logic inside this method
 	public void letsPlayWar() {
+		
+		int playerOneCardVal = 0, playerTwoCardVal = 0;
 		
 		Card playerOneCard, playerTwoCard ;
 		
-		while ( ! someOneLost() ) {
+		
+		while ( ! someOneLostTheGame() ) {
 			
 			playerOneCard = this.playerOneDeck.dealNextCard();
 			playerTwoCard = this.playerTwoDeck.dealNextCard();
 
+			playerOneCardVal = playerOneCard.getFaceNumber();
+			playerTwoCardVal = playerTwoCard.getFaceNumber();
+			
+			// insert the new cards to the main Deck
+			this.dealerDeck.insertNewCardToDeck(playerOneCard);	
+			this.dealerDeck.insertNewCardToDeck(playerTwoCard);
 			
 			// War logic
-			if (this.atWar && this.currentWarStrike < MAX_WAR_SEQUENCE)	{
-				
-				// insert the new cards to the main Deck
-				this.dealerDeck.insertNewCardToDeck(playerOneCard);	
-				this.dealerDeck.insertNewCardToDeck(playerTwoCard);
-				
-				this.currentWarStrike++;
-			}
-			else if ( this.atWar && this.currentWarStrike == MAX_WAR_SEQUENCE)	{ 		// Reached final iteration of war
-			
-				if( playerOneCard.getFaceNumber() == playerTwoCard.getFaceNumber())	{
-					// New war - Init the counter of war for next war run
-					this.currentWarStrike = 0;		
+			if ( ! this.atWar)	{
+				if (playerOneCardVal == playerTwoCardVal)	{
+					this.atWar = true;
+					this.currentWarStrike = 0;
 				}
-				else if(playerOneCard.getFaceNumber() > playerTwoCard.getFaceNumber() )
-				{
+				else if( playerOneCardVal > playerTwoCardVal)	{ 
+					//Player 1 won the Round
 					
+					// Add the output Here
+					this.dealerDeck.emptyDeckToWinnerDeck(this.playerOneDeck);
+				}
+				else	{
+					//Player 2 won the Round
+					
+					// Add the output Here
+					this.dealerDeck.emptyDeckToWinnerDeck(this.playerTwoDeck);
 				}
 			}
+			else	{
+				if ( this.currentWarStrike < MAX_WAR_SEQUENCE)
+					this.currentWarStrike++;
 				
+				else if( this.currentWarStrike == MAX_WAR_SEQUENCE)	{
+					
+					if (playerOneCardVal == playerTwoCardVal)
+						// Continue with war but counter return to 0 for more 3 iterations
+						this.currentWarStrike = 0;
+					
+					else {
+						if( playerOneCardVal > playerTwoCardVal)	{ 
+							//Player 1 won the Round
+							
+							// Add the output Here
+							this.dealerDeck.emptyDeckToWinnerDeck(this.playerOneDeck);
+						}
+						else	{
+							//Player 2 won the Round
+							
+							// Add the output Here
+							this.dealerDeck.emptyDeckToWinnerDeck(this.playerTwoDeck);
+						}
+						
+						this.atWar = false;
+						this.currentWarStrike = 0;
+					}
+				}
+			}
 				
 		}
+		
+		whoLostTheGame();
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		
+		
+		
 	}
 	
 }
