@@ -5,8 +5,13 @@ public class Card {
 	private final String cardSuit;	// Suit of cards - {"Hearts", "Diamonds", "Clubs", "Spades"}
 	
 	public Card	(String cardFace, String cardSuit) {
-		this.cardFace = cardFace;
-		this.cardSuit = cardSuit;
+		
+		
+		
+//		this.cardFace = cardFace;
+//		this.cardSuit = cardSuit;
+		this.cardFace = toTitleCase(cardFace);
+		this.cardSuit = toTitleCase(cardSuit);
 	}
 	
 	
@@ -77,9 +82,19 @@ public class Card {
 	}
 	
 	
+	//Private method to set the correct values of the card - to titleCase
+	private String toTitleCase(String property) {	
+		
+		if(property.length() == 0)
+			return property;
+		
+		return property.substring(0, 1).toUpperCase().concat(property.substring(1).toLowerCase());	
+	}
+	
+	
 	public static void main(String[] args) { 
 		
-		Card c1 = new Card("three", "Hearts");
+		Card c1 = new Card("tHREE", "HEARTS");
 		System.out.println(c1);
 		System.out.println(c1.getFaceNumber());
 	} 

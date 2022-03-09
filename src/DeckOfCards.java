@@ -15,4 +15,9 @@ public class DeckOfCards {
 	
 	
 	
+	public DeckOfCards() {
+		
+	}
+	
+	
 }
