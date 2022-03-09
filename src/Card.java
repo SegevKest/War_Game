@@ -1,14 +1,10 @@
 
 public class Card {
 	
-	private final int cardFace;		// Face of cards - {1- Ace, 2- Deuce, 3- Three, 4- Four... 11- Jack, 12- Queen, 13- King}
+	private final String cardFace;		// Face of cards - {1- Ace, 2- Deuce, 3- Three, 4- Four... 11- Jack, 12- Queen, 13- King}
 	private final String cardSuit;	// Suit of cards - {"Hearts", "Diamonds", "Clubs", "Spades"}
 	
-	
-	
-	
-
-	public Card	(int cardFace, String cardSuit) {
+	public Card	(String cardFace, String cardSuit) {
 		this.cardFace = cardFace;
 		this.cardSuit = cardSuit;
 	}
@@ -18,70 +14,74 @@ public class Card {
 		return this.cardSuit;
 	}
 	
-	public int getCardNumber () {
+	public String getCardFace () {
 		return this.cardFace;
 	}
 	
 	// Return the FaceName of the current card - by its value
-	public String getFaceName() {
+	public int getFaceNumber() {
 		
-		String faceToReturn = "";
+		int noOfFaceToReturn = 0;
 		
 		switch (this.cardFace) {
-		case 1:
-			faceToReturn = "Ace";
+		case "Ace":
+			noOfFaceToReturn = 1;
 			break;
-		case 2:
-			faceToReturn = "Deuce";
+		case "Deuce":
+			noOfFaceToReturn = 2;
 			break;
-		case 3:
-			faceToReturn = "Three";
+		case "Three":
+			noOfFaceToReturn = 3;
 			break;
-		case 4:
-			faceToReturn = "Four";
+		case "Four":
+			noOfFaceToReturn = 4;
 			break;
-		case 5:
-			faceToReturn = "Five";
+		case "Five":
+			noOfFaceToReturn = 5;
 			break;
-		case 6:
-			faceToReturn = "Six";
+		case "Six":
+			noOfFaceToReturn = 6;
 			break;
-		case 7:
-			faceToReturn = "Seven";
+		case "Seven":
+			noOfFaceToReturn = 7;
 			break;
-		case 8:
-			faceToReturn = "Eight";
+		case "Eight":
+			noOfFaceToReturn = 8;
 			break;
-		case 9:
-			faceToReturn = "Nine";
+		case "Nine":
+			noOfFaceToReturn = 9;
 			break;
-		case 10:
-			faceToReturn = "Ten";
+		case "Ten":
+			noOfFaceToReturn = 10;
 			break;
-		case 11:
-			faceToReturn = "Jack";
+		case "Jack":
+			noOfFaceToReturn = 11;
 			break;
-		case 12:
-			faceToReturn = "Queen";
+		case "Queen":
+			noOfFaceToReturn = 12 ;
 			break;
-		case 13:
-			faceToReturn = "King";
+		case "King":
+			noOfFaceToReturn = 13;
 			break;
 		default:
+			
 			break;
 		}
 		
-		return faceToReturn;
+		return noOfFaceToReturn;
 	}
 	
 	
 	public String toString() {
-		return getFaceName() + " of " + this.cardSuit; 
+		return this.cardFace + " of " + this.cardSuit; 
 	}
 	
 	
 	public static void main(String[] args) { 
 		
+		Card c1 = new Card("three", "Hearts");
+		System.out.println(c1);
+		System.out.println(c1.getFaceNumber());
 	} 
 
 }
