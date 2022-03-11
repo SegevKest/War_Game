@@ -1,4 +1,9 @@
 
+
+//  Class represents a Card in the Deck 
+// Each card contains two String attributes of Face (Value to compare) and Suit (Type of card)
+// In Addition, I created a method that calculate the numeric value of each face - for comparison in the war
+
 public class Card {
 	
 	private final String cardFace;		// Face of cards - {1- Ace, 2- Deuce, 3- Three, 4- Four... 11- Jack, 12- Queen, 13- King}
@@ -7,6 +12,7 @@ public class Card {
 	private final int DEFAULT_ACE_VALUE = 15;		// Higher Ace Value than all others
 	
 	
+	// The consturctor of the Card - with its toTitleCase Method that validate the Case
 	public Card	(String cardFace, String cardSuit) {
 		
 		this.cardFace = toTitleCase(cardFace);
@@ -22,7 +28,7 @@ public class Card {
 		return this.cardFace;
 	}
 	
-	// Return the FaceName of the current card - by its value
+	// Return the FaceName numeric value of the current card 
 	public int getFaceNumber() {
 		
 		int noOfFaceToReturn = 0;
@@ -74,14 +80,13 @@ public class Card {
 		
 		return noOfFaceToReturn;
 	}
-	
-	
+		
+	// toString method to print the Current card in a understandable way 
 	public String toString() {
 		return this.cardFace + " of " + this.cardSuit; 
 	}
 	
-	
-	//Private method to set the correct values of the card - to titleCase
+	//Private method to set the correct values of the card - to titleCase - to avoid faces and suits that are not in the correct Case.
 	private String toTitleCase(String property) {	
 		
 		if(property.length() == 0)
@@ -90,6 +95,5 @@ public class Card {
 		return property.substring(0, 1).toUpperCase().concat(property.substring(1).toLowerCase());	
 	}
 	
-
 
 }

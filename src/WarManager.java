@@ -1,12 +1,14 @@
 import javax.swing.JOptionPane;
 
 
+// The main War Class - that will represnt the Dealer stand point
+// This class contains 3 Decks - The Dealer and for each player.
+// It will handle all the logic for the game
 
 public class WarManager {
 
 	private static final int MAX_WAR_SEQUENCE = 3;
 	private static final int MIN_WAR_SEQUENCE = 1;
-	
 	
 	private DeckOfCards dealerDeck;
 	private DeckOfCards playerOneDeck;
@@ -30,7 +32,7 @@ public class WarManager {
 		
 	}
 	
-	
+	// The dealer splits its Deck to the Players equally- by its turn
 	public void dealerSplitsToPlayers() {
 		
 		this.playerOneDeck = new DeckOfCards();
@@ -52,14 +54,14 @@ public class WarManager {
 		}	
 	}
 	
-	
+	// Private method to check if a player lost
 	private boolean someOneLostTheGame() {
 	
 		return	(! this.playerOneDeck.lostInGame() && this.playerTwoDeck.lostInGame()) ||
 				(this.playerOneDeck.lostInGame() && ! this.playerTwoDeck.lostInGame());		
 	}
 	
-	
+	// Private method for the final step - after someone lost
 	private String whoLostTheGame() {
 		
 		if ((! this.playerOneDeck.lostInGame() && this.playerTwoDeck.lostInGame()))
@@ -74,24 +76,20 @@ public class WarManager {
 	public void letsPlayWar() {
 		
 		int playerOneCardVal = 0, playerTwoCardVal = 0;
-		
 		Card playerOneCard, playerTwoCard ;
-		
 		
 		while ( ! someOneLostTheGame() ) {
 			
-			
-			//System.out.println("Dealers Deck: "+ this.dealerDeck.getSizeOfDeck() +"\n" + this.dealerDeck +"\n");
-			
+			// Get the 2 next cards
 			playerOneCard = this.playerOneDeck.dealNextCard();
 			playerTwoCard = this.playerTwoDeck.dealNextCard();
 
+			// Get the numeric value of each card
 			playerOneCardVal = playerOneCard.getFaceNumber();
 			playerTwoCardVal = playerTwoCard.getFaceNumber();
 			
-			
-//			JOptionPane.showMessageDialog(null, " Player 1 Card: "+playerOneCard);
-//			JOptionPane.showMessageDialog(null, " Player 2 Card: "+playerTwoCard);
+			JOptionPane.showMessageDialog(null, " Player 1 Card: "+playerOneCard);
+			JOptionPane.showMessageDialog(null, " Player 2 Card: "+playerTwoCard);
 			
 			// insert the new cards to the main Deck
 			this.dealerDeck.insertNewCardToDeck(playerOneCard);	
@@ -105,16 +103,13 @@ public class WarManager {
 				}
 				else if( playerOneCardVal > playerTwoCardVal)	{ 
 					//Player 1 won the Round
-					
 					this.dealerDeck.emptyDeckToWinnerDeck(this.playerOneDeck);
-//					JOptionPane.showMessageDialog(null, " Player 1 Won Round and get cards! ");
-
+					JOptionPane.showMessageDialog(null, " Player 1 Won Round and get cards! ");
 				}
 				else	{
 					//Player 2 won the Round
-					
 					this.dealerDeck.emptyDeckToWinnerDeck(this.playerTwoDeck);
-//					JOptionPane.showMessageDialog(null, " Player 2 Won Round and get cards! ");
+					JOptionPane.showMessageDialog(null, " Player 2 Won Round and get cards! ");
 				}
 			}
 			else	{
@@ -130,17 +125,14 @@ public class WarManager {
 					else {
 						if( playerOneCardVal > playerTwoCardVal)	{ 
 							//Player 1 won the Round
-
 							this.dealerDeck.emptyDeckToWinnerDeck(this.playerOneDeck);
-//							JOptionPane.showMessageDialog(null, " Player 1 Won Round and get cards! ");
+							JOptionPane.showMessageDialog(null, " Player 1 Won Round and get cards! ");
 
 						}
 						else	{
 							//Player 2 won the Round
-
 							this.dealerDeck.emptyDeckToWinnerDeck(this.playerTwoDeck);
-//							JOptionPane.showMessageDialog(null, " Player 2 Won Round and get cards! ");
-
+							JOptionPane.showMessageDialog(null, " Player 2 Won Round and get cards! ");
 						}
 						
 						this.atWar = false;
@@ -155,6 +147,7 @@ public class WarManager {
 	}
 	
 	
+	// The game  
 	public static void main(String[] args) {
 		
 		WarManager warGame = new WarManager();
