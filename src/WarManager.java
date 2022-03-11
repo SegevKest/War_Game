@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 public class WarManager {
 
 	private static final int MAX_WAR_SEQUENCE = 3;
+	private static final int MIN_WAR_SEQUENCE = 1;
+	
 	
 	private DeckOfCards dealerDeck;
 	private DeckOfCards playerOneDeck;
@@ -15,6 +17,8 @@ public class WarManager {
 	
 	private int currentWarStrike; 		// Counter indicates the current strike of war games
 	
+	
+	// Initiate the Dealer's Deck
 	public WarManager() {
 		
 		this.dealerDeck = new DeckOfCards();
@@ -23,15 +27,20 @@ public class WarManager {
 		this.playersTurn = true;
 		this.atWar = false;
 		this.currentWarStrike = 0;
+		
 	}
 	
 	
 	public void dealerSplitsToPlayers() {
 		
+		this.playerOneDeck = new DeckOfCards();
+		this.playerTwoDeck = new DeckOfCards();
+		
 		Card cardToDeal = this.dealerDeck.dealNextCard();
 		
 		while (cardToDeal != null)
 		{
+			
 			if( playersTurn )
 				this.playerOneDeck.insertNewCardToDeck(cardToDeal);
 			else
@@ -39,6 +48,7 @@ public class WarManager {
 
 			playersTurn = !playersTurn;
 			cardToDeal = this.dealerDeck.dealNextCard();
+			
 		}	
 	}
 	
@@ -46,8 +56,7 @@ public class WarManager {
 	private boolean someOneLostTheGame() {
 	
 		return	(! this.playerOneDeck.lostInGame() && this.playerTwoDeck.lostInGame()) ||
-				(this.playerOneDeck.lostInGame() && ! this.playerTwoDeck.lostInGame());
-				
+				(this.playerOneDeck.lostInGame() && ! this.playerTwoDeck.lostInGame());		
 	}
 	
 	
@@ -71,11 +80,18 @@ public class WarManager {
 		
 		while ( ! someOneLostTheGame() ) {
 			
+			
+			//System.out.println("Dealers Deck: "+ this.dealerDeck.getSizeOfDeck() +"\n" + this.dealerDeck +"\n");
+			
 			playerOneCard = this.playerOneDeck.dealNextCard();
 			playerTwoCard = this.playerTwoDeck.dealNextCard();
 
 			playerOneCardVal = playerOneCard.getFaceNumber();
 			playerTwoCardVal = playerTwoCard.getFaceNumber();
+			
+			
+//			JOptionPane.showMessageDialog(null, " Player 1 Card: "+playerOneCard);
+//			JOptionPane.showMessageDialog(null, " Player 2 Card: "+playerTwoCard);
 			
 			// insert the new cards to the main Deck
 			this.dealerDeck.insertNewCardToDeck(playerOneCard);	
@@ -85,19 +101,20 @@ public class WarManager {
 			if ( ! this.atWar)	{
 				if (playerOneCardVal == playerTwoCardVal)	{
 					this.atWar = true;
-					this.currentWarStrike = 0;
+					this.currentWarStrike = MIN_WAR_SEQUENCE;
 				}
 				else if( playerOneCardVal > playerTwoCardVal)	{ 
 					//Player 1 won the Round
 					
-					// Add the output Here
 					this.dealerDeck.emptyDeckToWinnerDeck(this.playerOneDeck);
+//					JOptionPane.showMessageDialog(null, " Player 1 Won Round and get cards! ");
+
 				}
 				else	{
 					//Player 2 won the Round
 					
-					// Add the output Here
 					this.dealerDeck.emptyDeckToWinnerDeck(this.playerTwoDeck);
+//					JOptionPane.showMessageDialog(null, " Player 2 Won Round and get cards! ");
 				}
 			}
 			else	{
@@ -108,39 +125,44 @@ public class WarManager {
 					
 					if (playerOneCardVal == playerTwoCardVal)
 						// Continue with war but counter return to 0 for more 3 iterations
-						this.currentWarStrike = 0;
+						this.currentWarStrike = MIN_WAR_SEQUENCE;
 					
 					else {
 						if( playerOneCardVal > playerTwoCardVal)	{ 
 							//Player 1 won the Round
-							
-							// Add the output Here
+
 							this.dealerDeck.emptyDeckToWinnerDeck(this.playerOneDeck);
+//							JOptionPane.showMessageDialog(null, " Player 1 Won Round and get cards! ");
+
 						}
 						else	{
 							//Player 2 won the Round
-							
-							// Add the output Here
+
 							this.dealerDeck.emptyDeckToWinnerDeck(this.playerTwoDeck);
+//							JOptionPane.showMessageDialog(null, " Player 2 Won Round and get cards! ");
+
 						}
 						
 						this.atWar = false;
-						this.currentWarStrike = 0;
+						this.currentWarStrike = MIN_WAR_SEQUENCE;
 					}
 				}
 			}
 				
 		}
 		
-		whoLostTheGame();
+		JOptionPane.showMessageDialog(null, whoLostTheGame());
 	}
 	
 	
 	public static void main(String[] args) {
 		
+		WarManager warGame = new WarManager();
 		
+		warGame.dealerSplitsToPlayers();
 		
-		
+		warGame.letsPlayWar();
+	
 	}
 	
 }

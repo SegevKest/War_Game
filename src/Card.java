@@ -4,12 +4,11 @@ public class Card {
 	private final String cardFace;		// Face of cards - {1- Ace, 2- Deuce, 3- Three, 4- Four... 11- Jack, 12- Queen, 13- King}
 	private final String cardSuit;	// Suit of cards - {"Hearts", "Diamonds", "Clubs", "Spades"}
 	
+	private final int DEFAULT_ACE_VALUE = 15;		// Higher Ace Value than all others
+	
+	
 	public Card	(String cardFace, String cardSuit) {
 		
-		
-		
-//		this.cardFace = cardFace;
-//		this.cardSuit = cardSuit;
 		this.cardFace = toTitleCase(cardFace);
 		this.cardSuit = toTitleCase(cardSuit);
 	}
@@ -29,8 +28,8 @@ public class Card {
 		int noOfFaceToReturn = 0;
 		
 		switch (this.cardFace) {
-		case "Ace":
-			noOfFaceToReturn = 1;
+		case "Ace":		
+			noOfFaceToReturn = DEFAULT_ACE_VALUE;
 			break;
 		case "Deuce":
 			noOfFaceToReturn = 2;
@@ -91,12 +90,6 @@ public class Card {
 		return property.substring(0, 1).toUpperCase().concat(property.substring(1).toLowerCase());	
 	}
 	
-	
-	public static void main(String[] args) { 
-		
-		Card c1 = new Card("tHREE", "HEARTS");
-		System.out.println(c1);
-		System.out.println(c1.getFaceNumber());
-	} 
+
 
 }

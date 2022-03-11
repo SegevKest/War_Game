@@ -10,25 +10,25 @@ public class DeckOfCards {
 	private static final int NO_OF_CARDS = 52;
 	private static final int NO_OF_FACES = 13;
 	
-	private ArrayList<Card> deckOfCards;
-	private int headOfDeck ;
-	private int tailOfDeck ;
+	private static final int HEAD_OF_DECK = 0;
 	
+	private ArrayList<Card> deckOfCards;
+	private int headOfDeck ;	
 	
 	
 	public DeckOfCards() {
 		
 		deckOfCards = new ArrayList<Card>();
-		this.headOfDeck = 0;
-		this.tailOfDeck = 0;
+		this.headOfDeck = HEAD_OF_DECK;
 	}
 	
 	
 	// Deal the next Card from head of deck and increase head of deck
 	public Card dealNextCard() {
 		
-		if (this.headOfDeck < this.tailOfDeck)
-			return this.deckOfCards.remove(headOfDeck++);
+		if (this.headOfDeck < this.deckOfCards.size()) 
+			 return this.deckOfCards.remove(this.headOfDeck);
+		
 		else
 			return null;
 	}
@@ -36,10 +36,9 @@ public class DeckOfCards {
 	// Insert new card to the end of the deck
 	public void insertNewCardToDeck(Card newCard) {
 		
-		if(newCard instanceof Card)	{
+		if(newCard instanceof Card)	
 			this.deckOfCards.add(newCard);
-			this.tailOfDeck++;
-		}
+		
 		else
 			System.out.println("Not Valid Card Entered");
 	}
@@ -52,13 +51,20 @@ public class DeckOfCards {
 	
 	
 		for( int count =0; count < NO_OF_CARDS; count++) 
-			insertNewCardToDeck(new Card(faces[count % NO_OF_FACES],suits[count / NO_OF_FACES]));
+			this.insertNewCardToDeck(new Card(faces[count % NO_OF_FACES],suits[count / NO_OF_FACES]));
 		
 		shuffleDeck();
 	
 	}
 	
 	
+	//Public getSize method to print size of deck
+	public int getSizeOfDeck() {
+		return this.deckOfCards.size();
+	}
+	
+	
+	//Public toString method to print the Deck
 	public String toString() {
 		
 		return this.deckOfCards.toString();
@@ -99,12 +105,4 @@ public class DeckOfCards {
 		return this.deckOfCards.size() == 0;
 	}
 	
-	
-	public static void main(String[] args ) {
-		
-		DeckOfCards d1 = new DeckOfCards();
-		d1.loadAndShuffle();
-		System.out.println(d1);
-		
-	}
 }
